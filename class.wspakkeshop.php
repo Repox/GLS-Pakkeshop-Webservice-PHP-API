@@ -148,7 +148,7 @@
 			try
 			{
 				$shops = $this->client->SearchNearestParcelShops(array('street' => $street, 'zipcode' => $zipcode, 'Amount' => $amount));
-				return $shops->SearchNearestParcelShops->parcelshops->PakkeshopData;
+				return $shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData;
 			}
 			catch(Exception $e)
 			{
