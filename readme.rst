@@ -10,7 +10,7 @@ Du kan også finde oplysninger om specifikke pakkeshops.
 Eksempel på brug
 ****************
 
-```php
+```
 <?php
   require_once 'class.wspakkeshop.php';
   $gls = new wsPakkeshop();
