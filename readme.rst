@@ -10,18 +10,20 @@ Du kan også finde oplysninger om specifikke pakkeshops.
 Eksempel på brug
 ****************
 
-    <?php
-      require_once 'class.wspakkeshop.php';
-      $gls = new wsPakkeshop();
+```php
+<?php
+  require_once 'class.wspakkeshop.php';
+  $gls = new wsPakkeshop();
       
-      // Find nærmeste pakkeshops nær Skyggevej 1 i 4600 Køge
-      $shops = $gls->SearchNearestParcelShops('Skyggevej 1', 4600);
-      foreach($shops as $shop)
-      {
-      	// Udskriver pakkeshoppenes nummer og navn
-        echo $shop->Number.": ".$shop->CompanyName."<br>";	
-      }
-    ?>
+  // Find nærmeste pakkeshops nær Skyggevej 1 i 4600 Køge
+  $shops = $gls->SearchNearestParcelShops('Skyggevej 1', 4600);
+  foreach($shops as $shop)
+  {
+  	// Udskriver pakkeshoppenes nummer og navn
+    echo $shop->Number.": ".$shop->CompanyName."<br>";	
+  }
+?>
+```
 
 ***********
 Server Krav
