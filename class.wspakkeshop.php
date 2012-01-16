@@ -1,6 +1,4 @@
 <?php
-	error_reporting(-1);
-	header("Content-Type: text/plain; charset=UTF-8");
 
 	/**
 	 * This class will enable access to the GLS Pakkeshop webservcie.
@@ -20,17 +18,20 @@
 
 	class wsPakkeshop
 	{
-		private $client;
+		private $client, $encoding;
 		public $error;
+		
 		
 		/**
 		 * This is the constructor method.
 		 * This starts the SoapClient to GLS wsPakkeshop SOAP service.
-		 * The __construct takes no parameters.
+		 * 
+		 * @access	public
+		 * @params	string	The encoding you wish to use - default is ISO-8859-1.
 		 */
-		public function __construct()
+		public function __construct($encoding = 'ISO-8859-1')
 		{
-			$this->client = new SoapClient("http://www.gls.dk/webservices_v2/wsPakkeshop.asmx?WSDL");
+			$this->client = new SoapClient("http://www.gls.dk/webservices_v2/wsPakkeshop.asmx?WSDL", array('encoding' => $encoding));
 		}	
 		
 		/**
@@ -56,6 +57,8 @@
 		
 		
 		/**
+		 * WARNING: This method is experimental according to the documentation
+		 *
 		 * This method returns an array of objects with parcel shops
 		 * near the exact address specfied. The street name and number
 		 * needs to be provided for this to work.
@@ -148,6 +151,10 @@
 			try
 			{
 				$shops = $this->client->SearchNearestParcelShops(array('street' => $street, 'zipcode' => $zipcode, 'Amount' => $amount));
+				
+				if(!is_array($shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData))
+					return array($shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData);
+				
 				return $shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData;
 			}
 			catch(Exception $e)
