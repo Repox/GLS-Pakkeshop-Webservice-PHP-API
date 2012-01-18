@@ -120,8 +120,14 @@
 			try
 			{	
 				$shops = $this->client->GetParcelShopsInZipcode(array('zipcode' => $zipcode));
+				
 				if(isset($shops->GetParcelShopsInZipcodeResult->PakkeshopData))
-					return $shops->GetParcelShopsInZipcodeResult->PakkeshopData;
+				{
+					if(!is_array($shops->GetParcelShopsInZipcodeResult->PakkeshopData))					
+						return array($shops->GetParcelShopsInZipcodeResult->PakkeshopData);
+					else
+						return $shops->GetParcelShopsInZipcodeResult->PakkeshopData;
+				}
 				else
 					return array();
 			}
