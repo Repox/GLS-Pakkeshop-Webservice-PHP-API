@@ -22,6 +22,7 @@ Eksempler
 I kildekoden medfølger nogle eksempler.
 
 - Et banalt eksempel på en søgning (basic)
+- Et banalt eksempel på en søgning ud fra postnummer (zipcode)
 - Et banalt eksempel på en søgning med bestemmelse af antal søgeresultater (basic_extended)
 - Et eksempel på anvendelse med AJAX (ajax)
 - Et eksempel på en fuld liste med detaljevisning (full_list)
