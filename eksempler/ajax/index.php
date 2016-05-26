@@ -7,7 +7,7 @@
 		label { display: block; }			
 		</style>
 		<!-- Inkludering af jQuery -->
-		<script style="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script style="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	</head>
 	<body>
 

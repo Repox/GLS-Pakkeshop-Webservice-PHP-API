@@ -18,7 +18,7 @@
 
 	class wsPakkeshop
 	{
-		private $client, $encoding;
+		private $client, $encoding, $country;
 		public $error;
 		
 		
@@ -27,11 +27,13 @@
 		 * This starts the SoapClient to GLS wsPakkeshop SOAP service.
 		 * 
 		 * @access	public
+		 * @params  string  The country you want to search in, defaults to DK (valid values is compliant with ISO 3166-2)
 		 * @params	string	The encoding you wish to use - default is ISO-8859-1.
 		 */
-		public function __construct($encoding = 'ISO-8859-1')
+		public function __construct($country = 'DK', $encoding = 'ISO-8859-1')
 		{
-			$this->client = new SoapClient("http://www.gls.dk/webservices_v2/wsPakkeshop.asmx?WSDL", array('encoding' => $encoding));
+			$this->country = $country;
+			$this->client = new SoapClient("http://www.gls.dk/webservices_v3/wsShopFinder.asmx?WSDL", array('trace' => 1, 'encoding' => $encoding));
 		}	
 		
 		/**
@@ -45,7 +47,7 @@
 		{
 			try
 			{	
-				$shops = $this->client->GetAllParcelShops(array());
+				$shops = $this->client->GetAllParcelShops(array( 'countryIso3166A2' => $this->country ));
 				return $shops->GetAllParcelShopsResult->PakkeshopData;		
 			}
 			catch(Exception $e)
@@ -57,7 +59,6 @@
 		
 		
 		/**
-		 * WARNING: This method is experimental according to the documentation
 		 *
 		 * This method returns an array of objects with parcel shops
 		 * near the exact address specfied. The street name and number
@@ -70,11 +71,11 @@
 		 * @param	int	The amount of parcel shops returned - default is 5.
 		 * @return	mixed	An array of objects or boolean false if service call failed.
 		 */
-		public function GetNearstParcelShops( $street, $zipcode, $amount = 5)
+		public function GetParcelShopDropPoint( $street, $zipcode, $amount = 5)
 		{
 			try
 			{
-				$shops = $this->client->GetNearstParcelShops(array('street' => $street, 'zipcode' => $zipcode, 'Amount' => $amount));
+				$shops = $this->client->GetParcelShopDropPoint(array('street' => $street, 'zipcode' => $zipcode, 'countryIso3166A2' => $this->country, 'Amount' => $amount));
 				return $shops->GetNearstParcelShopsResult->parcelshops->PakkeshopData;
 			}
 			catch(Exception $e)
@@ -119,7 +120,7 @@
 		{
 			try
 			{	
-				$shops = $this->client->GetParcelShopsInZipcode(array('zipcode' => $zipcode));
+				$shops = $this->client->GetParcelShopsInZipcode(array('zipcode' => $zipcode, 'countryIso3166A2' => $this->country));
 				
 				if(isset($shops->GetParcelShopsInZipcodeResult->PakkeshopData))
 				{
@@ -156,8 +157,7 @@
 		{
 			try
 			{
-				$shops = $this->client->SearchNearestParcelShops(array('street' => $street, 'zipcode' => $zipcode, 'Amount' => $amount));
-				
+				$shops = $this->client->SearchNearestParcelShops(array('street' => $street, 'zipcode' => $zipcode, 'countryIso3166A2' => $this->country, 'Amount' => $amount));
 				if(!is_array($shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData))
 					return array($shops->SearchNearestParcelShopsResult->parcelshops->PakkeshopData);
 				

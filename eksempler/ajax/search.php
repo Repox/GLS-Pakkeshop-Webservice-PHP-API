@@ -6,7 +6,7 @@
 	 * Dette medsendes som en parameter i instansieringen.
 	 */
 	include '../../class.wspakkeshop.php';
-	$gls = new wsPakkeshop('UTF-8');
+	$gls = new wsPakkeshop('DK', 'UTF-8');
 	
 	/**
 	 * Ved at angive en specific og eksisterende adresse vil resultatet
